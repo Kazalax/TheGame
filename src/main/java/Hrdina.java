@@ -15,7 +15,7 @@ abstract class Hrdina {
     protected boolean omraceni = false; // Indikuje, zda je hrdina pod omráčením
     protected int omraceniTahy = 0; // Počet tahů, po které omráčení trvá
 
-    public Hrdina(String trida,String jmeno, int zivoty,int maxZivoty, int sila, int mana,int maxMana){
+    public Hrdina(String trida, int zivoty, int maxZivoty, int sila, int mana, int maxMana){
         this.trida = trida;
         this.jmeno = jmeno;
         this.zivoty = zivoty;
@@ -90,7 +90,7 @@ abstract class Hrdina {
             ochrana = false;
         } else if (otrava) {
             this.zivoty -= 10;
-            System.out.println(jmeno + " má otravu alkoholem a ztratil 10 životů.");
+            System.out.println(jmeno + " má otravu a ztratil 10 životů.");
         }
         if (uder > 0) {
             this.zivoty -= uder;
@@ -126,20 +126,20 @@ abstract class Hrdina {
 
 class Zednik extends Hrdina{
     public Zednik(String jmeno) {
-        super("Zedník",jmeno, 150,150,25,30,30);
+        super("Zedník", 150,150,25,30,30);
     }
 
     @Override
     public void utokPrimarni(Hrdina nepritel) {
         int uder = sila + random.nextInt(10);
-        System.out.println(jmeno + " používá: útok zednickým kladivem!");
+        System.out.println(jmeno + " používá: útok zednickým kladivem a způsobuje " + uder + " poškození!");
         nepritel.prijmoutUtok(uder);
     }
 
     @Override
     public void utokSekundarni(Hrdina nepritel) {
         int uder = sila + random.nextInt(10);
-        System.out.println(jmeno + " používá: hod cihlou!");
+        System.out.println(jmeno + " používá: hod cihlou a způsobuje " + uder + " poškození!");
         nepritel.prijmoutUtok(uder);
     }
 
@@ -160,13 +160,13 @@ class Zednik extends Hrdina{
 
 class Knez extends Hrdina{
     public Knez(String jmeno) {
-        super("Kněz",jmeno, 80,80,20,60,60);
+        super("Kněz", 80,80,20,60,60);
     }
 
     @Override
     public void utokPrimarni(Hrdina nepritel) {
         int uder = (sila + random.nextInt(10))/2;
-        System.out.println(jmeno + " používá: Exorcismus!");
+        System.out.println(jmeno + " používá: Exorcismus a způsobuje " + uder + " poškození a vyléčil si " + uder + " životů!");
         nepritel.prijmoutUtok(uder);
         zivoty = zivoty + uder;
         if (zivoty>maxZivoty){
@@ -177,15 +177,14 @@ class Knez extends Hrdina{
     @Override
     public void utokSekundarni(Hrdina nepritel) {
         int uder = sila + random.nextInt(10);
-        System.out.println(jmeno + " používá: Upálení v Kosnici!");
+        System.out.println(jmeno + " používá: Upálení v Kosnici a způsobuje " + uder + " poškození!");
         nepritel.prijmoutUtok(uder);
     }
 
     @Override
     public void utokSpecialni(Hrdina nepritel) {
         if (mana>=30){
-            int uder = sila + random.nextInt(10);
-            System.out.println(jmeno + " používá speciální útok: Svěcená Moč!");
+            System.out.println(jmeno + " používá speciální útok: Božský úder!");
             mana = mana - 30;
             nepritel.aktivujOmraceni(2);
         } else {
@@ -198,20 +197,20 @@ class Knez extends Hrdina{
 }
 class Cisnik extends Hrdina{
     public Cisnik(String jmeno) {
-        super("Číšník",jmeno, 100,100,30,30,30);
+        super("Číšník", 100,100,30,30,30);
     }
 
     @Override
     public void utokPrimarni(Hrdina nepritel) {
         int uder = sila + random.nextInt(10);
-        System.out.println(jmeno + " používá: hod tácem!");
+        System.out.println(jmeno + " používá: hod tácem a způsobuje " + uder + " poškození!");
         nepritel.prijmoutUtok(uder);
     }
 
     @Override
     public void utokSekundarni(Hrdina nepritel) {
         int uder = 0;
-        System.out.println(jmeno + " používá: Další runda!");
+        System.out.println(jmeno + " používá: Další runda a způsobuje " + uder + " poškození!");
         nepritel.aktivujOtravu(3);
         nepritel.prijmoutUtok(uder);
     }
@@ -219,9 +218,10 @@ class Cisnik extends Hrdina{
     @Override
     public void utokSpecialni(Hrdina nepritel) {
         if (mana>=30){
+            int uder = sila + random.nextInt(20);
             System.out.println(jmeno + " používá speciální útok: Smršť nádobí!");
             mana = mana - 30;
-
+            nepritel.prijmoutUtok(uder);
         } else {
             System.out.println("Nedostatek many!");
         }

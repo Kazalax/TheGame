@@ -1,52 +1,22 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Hra {
-    public void souboj(){
-    Scanner scanner = new Scanner(System.in);
+    Random random = new Random();
 
-        // Seznam dostupných hrdinů
-        String[] hrdinové = {"Zedník", "Kněz", "Číšník"};
+    public Nepritel vyberNepritele() {
+        Nepritel[] nepratele = {new UcitelMatematiky(), new StinnyStrom(), new Bezdomovec()};
+        int nahodnyIndex = random.nextInt(nepratele.length);
+        return nepratele[nahodnyIndex];
+    }
 
-        System.out.println("Vyber jméno hrdiny:");
-        String jmeno = scanner.nextLine();
+    public void souboj(Hrdina hrdina) {
+        Scanner scanner = new Scanner(System.in);
+        Nepritel nepritel = vyberNepritele();
 
-        // Zobrazení seznamu hrdinů
-        System.out.println("Vyberte si hrdinu:");
-        for (int i = 0; i < hrdinové.length; i++) {
-            System.out.println((i + 1) + ". " + hrdinové[i]);
-        }
-
-        // Získání volby uživatele
-        int volbaHrdiny = scanner.nextInt();
-        if (volbaHrdiny < 1 || volbaHrdiny > hrdinové.length) {
-            System.out.println("Neplatná volba. Zvolte číslo z nabídky.");
-            return;
-        }
-
-
-
-        // Vytvoření instance vybraného hrdiny
-        Hrdina hrdina;
-        switch (volbaHrdiny) {
-            case 1:
-                hrdina = new Zednik(jmeno);
-                break;
-            case 2:
-                hrdina = new Knez(jmeno);
-                break;
-            case 3:
-                hrdina = new Cisnik(jmeno);
-                break;
-            default:
-                hrdina = null; // V případě chyby
-                break;
-        }
-
-
-    Nepritel nepritel = new Nepritel("Bezdomovec");
-
+        System.out.println("Zaútočil na tebe " + nepritel.jmeno + "!");
         while (hrdina.jeNazivu() && nepritel.jeNazivu()) {
             hrdina.dramatickaPauza();
             if (hrdina.omraceni){

@@ -23,7 +23,7 @@ public abstract class Nepritel extends Hrdina {
  */
 class UcitelMatematiky extends Nepritel {
     public UcitelMatematiky() {
-        super("Učitel Matematiky", "Učitel", 80, 80, 15, 30, 30);
+        super("Učitel Matematiky", "Učitel", 800, 80, 15, 30, 30);
     }
 
     @Override
@@ -60,7 +60,7 @@ class UcitelMatematiky extends Nepritel {
 
 class StinnyStrom extends Nepritel {
     public StinnyStrom() {
-        super("Stinný Strom", "Rostilna", 100, 100, 5, 30, 30);
+        super("Stinný Strom", "Rostilna", 1000, 100, 5, 30, 30);
     }
 
     @Override
@@ -97,7 +97,7 @@ class StinnyStrom extends Nepritel {
 
 class Bezdomovec extends Nepritel {
     public Bezdomovec() {
-        super("Král odpadků", "Bezdomovec", 60, 60, 10, 0, 0);
+        super("Král odpadků", "Bezdomovec", 600, 60, 10, 0, 0);
     }
 
     @Override

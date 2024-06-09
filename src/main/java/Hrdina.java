@@ -87,7 +87,9 @@ abstract class Hrdina {
                 otrava = false;
             }
         }
+    }
 
+    public void zkontrolujOmraceni(){
         if (omraceni) {
             omraceniTahy--;
             if (omraceniTahy <= 0) {
@@ -95,6 +97,8 @@ abstract class Hrdina {
             }
         }
     }
+
+
 
     /**
      * metoda pro vypisování popisků k schopnostem
@@ -203,9 +207,9 @@ class Zednik extends Hrdina {
     @Override
     public String popisSchopnosti() {
         return "Zedník má následující schopnosti:\n" +
-                "1. Útok zednickým kladivem: Silný útok blízkého dosahu.\n" +
-                "2. Hod cihlou: Středně silný útok na dálku.\n" +
-                "3. Opření o lopatu: Speciální útok, který aktivuje ochranu na 2 tahy.";
+                "1. Útok zednickým kladivem: Silný útok blízkého dosahu\n" +
+                "2. Hod cihlou: Středně silný útok na dálku\n" +
+                "3. Opření o lopatu: Speciální útok, který aktivuje ochranu na 2 tahy";
 
     }
 }
@@ -248,9 +252,9 @@ class Knez extends Hrdina {
     @Override
     public String popisSchopnosti() {
         return "Kněz má následující schopnosti:\n" +
-                "1. Exorcismus: Slabý útok, který vyléčí stejné množství životů jako způsobeného poškození nepříteli.\n" +
-                "2. Upálení v Kostnici: S pomocí silou boží uvrhne nepřítele do plamenů a způsobí vysoké poškození.\n" +
-                "3. Božský úder: Speciální útok, který aktivuje omráČení na nepřítele na 2 tahy.";
+                "1. Exorcismus: Slabý útok, který vyléčí ve výši poškození\n" +
+                "2. Upálení v Kostnici: S pomocí síly boží uvrhne nepřítele do plamenů a způsobí vysoké poškození\n" +
+                "3. Božský úder: Speciální útok, který aktivuje omráčení na nepřítele na 2 tahy";
 
 
     }
@@ -271,7 +275,7 @@ class Cisnik extends Hrdina {
     @Override
     public void utokSekundarni(Hrdina nepritel) {
         int uder = 0;
-        System.out.println(jmeno + " používá: Další runda a způsobuje " + uder + " poškození!");
+        System.out.println(jmeno + " používá: Další runda a způsobuje otravu nepříteli!");
         nepritel.aktivujOtravu(3);
         nepritel.prijmoutUtok(uder);
     }

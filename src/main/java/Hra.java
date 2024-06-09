@@ -22,18 +22,20 @@ public class Hra {
         Scanner scanner = new Scanner(System.in);
         Nepritel nepritel = vyberNepritele();
 
-        hrdina.zkontrolujEfekty();
+
         System.out.println("Zaútočil na tebe " + nepritel.jmeno + "!");
         while (hrdina.jeNazivu() && nepritel.jeNazivu()) {
             hrdina.dramatickaPauza();
             if (hrdina.omraceni) {
                 System.out.println("Byl jsi omráčen ztrácíš tah!");
+                hrdina.zkontrolujOmraceni();
             } else {
                 System.out.println("\n--- Nový tah ---");
                 System.out.println("Vyber útok:");
                 System.out.println("1. Primární útok");
                 System.out.println("2. Sekundární útok");
                 System.out.println("3. Speciální útok");
+                System.out.println("4. Popis schopností");
 
                 int volba = scanner.nextInt();
 
@@ -47,12 +49,16 @@ public class Hra {
                     case 3:
                         hrdina.utokSpecialni(nepritel);
                         break;
+                    case 4:
+                        System.out.println(hrdina.popisSchopnosti());
+                        continue;
                     default:
                         System.out.println("Neplatná volba, prosím vyber znovu.");
                         continue;
-
                 }
+                hrdina.zkontrolujEfekty(); // Kontrola a aktualizace efektů po útoku
             }
+
 
             //regeneruje manu hrdiny i nepřítele
             hrdina.regenerujManu(10);
@@ -66,6 +72,7 @@ public class Hra {
                 // NPC Nepřítel náhodně útočí
                 if (nepritel.omraceni) {
                     System.out.println("nepřítel byl omráčen!");
+                    nepritel.zkontrolujOmraceni();
                 } else {
                     int npcVolba = hrdina.random.nextInt(3) + 1;
                     switch (npcVolba) {

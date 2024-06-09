@@ -3,13 +3,13 @@ import java.util.Scanner;
 public class Intro {
 
 
-    Scanner scanner = new Scanner(System.in); // Create an instance of the Scanner class
+    Scanner scanner = new Scanner(System.in);
 
     // Seznam dostupných hrdinů
     String[] hrdinové = {"Zedník", "Kněz", "Číšník"};
 
     public Hrdina vyberHrdinu() {
-        System.out.println("Vyber jméno hrdiny:"); // Call println() from the Scanner instance
+        System.out.println("Vyber jméno hrdiny:");
         String jmeno = scanner.nextLine();
 
         // Zobrazení seznamu hrdinů

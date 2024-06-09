@@ -1,9 +1,10 @@
-import java.util.*;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Mapa {
     private static final int sirka = 11;
     private static final int vyska = 7;
-    private char[][] mapa;
+    private final char[][] mapa;
     private int hracX = sirka;
     private int hracY = vyska;
 
@@ -14,39 +15,54 @@ public class Mapa {
     Scanner scanner = new Scanner(System.in);
     Random random = new Random();
     Hra hra = new Hra();
-    private Hrdina hrdina;
+    private final Hrdina hrdina;
 
+
+    /**
+     * konstruktor Mapy
+     */
     public Mapa(Hrdina hrdina) {
         this.hrdina = hrdina;
         mapa = new char[vyska][sirka];
         inicializujMapu();
     }
 
+    /**
+     * inicializuje Mapy
+     */
     private void inicializujMapu() {
         for (int y = 0; y < vyska; y++) {
             for (int x = 0; x < sirka; x++) {
                 if (x == 0 || x == sirka - 1 || y == 0 || y == vyska - 1) {
-                    mapa[y][x] = STENA; // walls
+                    mapa[y][x] = STENA;
                 } else {
-                    mapa[y][x] = PUSTINA; // empty space
+                    mapa[y][x] = PUSTINA;
                 }
             }
         }
     }
 
+    /**
+     * umistí hráče na mapu
+     */
     public void umistiHrace() {
         hracX = sirka / 2;
         hracY = vyska / 2;
         mapa[hracY][hracX] = HRAC;
     }
+
     private boolean jeVHracimPoli(int x, int y) {
-        return x >= 0 && x < sirka && y >= 0 && y < vyska;
+        return x >= 0 && x < sirka && y >= 0 && y < vyska && mapa[y][x] != STENA;
     }
 
-    public void PohniHracem() {
-        boolean combatTriggered = false; // Flag to track combat status
 
-        while (!combatTriggered) {
+    /**
+     * umožňuje pohyb hráče po mapě
+     */
+    public void PohniHracem() {
+        boolean spustecBoje = false;//pokud je true spusti souboj
+
+        while (!spustecBoje) {
             //ukaze mapu
             for (int y = 0; y < vyska; y++) {
                 for (int x = 0; x < sirka; x++) {
@@ -59,7 +75,7 @@ public class Mapa {
 
             System.out.print("Vyber si kam chceš jít!(W-nahoru, S-dolů, A-Doleva, D-Doprava)");
             String volba = scanner.nextLine().toLowerCase();
-            switch (volba){
+            switch (volba) {
                 case "w":
                     newY = hracY - 1;
                     break;
@@ -78,16 +94,16 @@ public class Mapa {
             }
 
             if (jeVHracimPoli(newX, newY)) {
-                // Combat check before updating the player's position
+                // po vstoupeni do pustiny je 20% šance na souboj
                 if (mapa[newY][newX] == PUSTINA && random.nextInt(5) == 0) {
-                    combatTriggered = true; // Set flag if combat triggers
+                    spustecBoje = true;
                     hra.souboj(hrdina);
                 }
 
-                mapa[hracY][hracX] = ODHALENO; // Reveal current position
+                mapa[hracY][hracX] = ODHALENO; // aktualní pozici změní na odhaleno
                 hracX = newX;
                 hracY = newY;
-                mapa[hracY][hracX] = HRAC; // Update player position
+                mapa[hracY][hracX] = HRAC; // přesune hráče
             } else {
                 System.out.println("Nemůžeš se pohybovat mimo mapu!");
             }

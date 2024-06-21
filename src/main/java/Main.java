@@ -3,11 +3,14 @@ public class Main {
 
         Intro intro = new Intro();
 
+        intro.uvod();
         Hrdina vybranyHrdina = intro.vyberHrdinu();
         if (vybranyHrdina != null) {
             Mapa mapa = new Mapa(vybranyHrdina);
             mapa.umistiHrace();
             mapa.PohniHracem();
+
+
         }
     }
 }

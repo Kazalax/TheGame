@@ -4,23 +4,12 @@ import java.util.Scanner;
 public class Hra {
     Random random = new Random();
 
-    /**
-     * metoda pro náhodný výběr nepřítele
-     *
-     * @return vrací náhodného nepřítele
-     */
-    public Nepritel vyberNepritele() {
-        Nepritel[] nepratele = {new UcitelMatematiky(), new StinnyStrom(), new Bezdomovec()};
-        int nahodnyIndex = random.nextInt(nepratele.length);
-        return nepratele[nahodnyIndex];
-    }
 
     /**
      * spustí souboj hrdiny s nepřítelem
      */
-    public void souboj(Hrdina hrdina) {
+    public void souboj(Hrdina hrdina, Hrdina nepritel) {
         Scanner scanner = new Scanner(System.in);
-        Nepritel nepritel = vyberNepritele();
 
 
         System.out.println("Zaútočil na tebe " + nepritel.jmeno + "!");
@@ -56,7 +45,6 @@ public class Hra {
                         System.out.println("Neplatná volba, prosím vyber znovu.");
                         continue;
                 }
-                hrdina.zkontrolujEfekty(); // Kontrola a aktualizace efektů po útoku
             }
 
 
@@ -64,7 +52,7 @@ public class Hra {
             hrdina.regenerujManu(10);
             nepritel.regenerujManu(10);
             //zkonroluje negativní efekty nepřítele
-            nepritel.zkontrolujEfekty();
+
             //pauza 1 s
             hrdina.dramatickaPauza();
 
@@ -88,14 +76,14 @@ public class Hra {
                     }
                 }
             }
+            hrdina.zkontrolujEfekty();
+            nepritel.zkontrolujEfekty();
             // Dramatická pauza
-            nepritel.dramatickaPauza();
+            hrdina.dramatickaPauza();
 
             System.out.println("\n--- Statusy ---");
             System.out.println(hrdina.status());
             System.out.println(nepritel.status());
-
-            hrdina.dramatickaPauza();
 
             if (!hrdina.jeNazivu()) {
                 System.out.println(hrdina.jmeno + " byl poražen.");
@@ -106,9 +94,6 @@ public class Hra {
             }
 
         }
-
-
-        scanner.close();
     }
 }
 

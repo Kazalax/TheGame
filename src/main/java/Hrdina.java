@@ -120,7 +120,7 @@ abstract class Hrdina {
                 this.zivoty -= uder;
                 System.out.println(jmeno + " byl zasažen! Ztratil " + uder + " životů."); // Zobrazení typu útoku
             }
-            if (otrava) {
+            if (otrava && !ochrana) {
                 this.zivoty -= 10;
                 System.out.println(jmeno + " má otravu a ztratil 10 životů.");
             }
